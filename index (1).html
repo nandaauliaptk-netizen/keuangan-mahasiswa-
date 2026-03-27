@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keuangan Mahasiswa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== HEADER (position: fixed) ===== -->
+    <header>
+        <div class="header-container">
+            <h1>💰 <span>Dompet</span>Mahasiswa</h1>
+            <nav>
+                <ul>
+                    <li><a href="#ringkasan">Ringkasan</a></li>
+                    <li><a href="#transaksi">Transaksi</a></li>
+                    <li><a href="#riwayat">Riwayat</a></li>
+                    <li><a href="#tips">Tips</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <h2>Kelola Keuanganmu dengan Bijak</h2>
+        <p>Catat pemasukan dan pengeluaranmu setiap hari agar keuangan tetap sehat selama kuliah.</p>
+        <a href="#transaksi" class="hero-btn">Mulai Catat Sekarang</a>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container">
+
+        <!-- Ringkasan Keuangan -->
+        <section id="ringkasan">
+            <h2 class="section-title">Ringkasan Keuangan</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="icon">💵</div>
+                    <h3>Total Pemasukan</h3>
+                    <div class="amount" id="totalIncome">Rp 0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="icon">🛒</div>
+                    <h3>Total Pengeluaran</h3>
+                    <div class="amount" id="totalExpense">Rp 0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="icon">📊</div>
+                    <h3>Saldo Saat Ini</h3>
+                    <div class="amount" id="balance">Rp 0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Input Transaksi -->
+        <section id="transaksi">
+            <h2 class="section-title">Tambah Transaksi</h2>
+            <div class="form-section">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="description">Keterangan</label>
+                        <input type="text" id="description" placeholder="Contoh: Makan siang, Uang saku">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Jumlah (Rp)</label>
+                        <input type="number" id="amount" placeholder="Contoh: 50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Jenis</label>
+                        <select id="type">
+                            <option value="income">Pemasukan</option>
+                            <option value="expense">Pengeluaran</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Tanggal</label>
+                        <input type="date" id="date">
+                    </div>
+                    <button class="btn-submit" onclick="addTransaction()">+ Tambah Transaksi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabel Riwayat -->
+        <section id="riwayat">
+            <h2 class="section-title">Riwayat Transaksi</h2>
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Jenis</th>
+                            <th>Jumlah</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionBody">
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+                <p id="emptyMsg" style="text-align:center; padding:30px; color:#a0aec0;">
+                    Belum ada transaksi. Mulai catat keuanganmu!
+                </p>
+            </div>
+        </section>
+
+        <!-- Tips Keuangan (Accordion interaktif) -->
+        <section id="tips" class="tips-section">
+            <h2 class="section-title">Tips Keuangan Mahasiswa</h2>
+            <div class="tips-grid">
+                <div class="tip-card" onclick="toggleTip(this)">
+                    <div class="tip-header">
+                        <h4>📝 Buat Anggaran Bulanan</h4>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="tip-content">
+                        Tentukan batas pengeluaran untuk setiap kategori seperti makan, transportasi, dan hiburan. Dengan anggaran yang jelas, kamu bisa mengontrol keuangan lebih baik.
+                    </div>
+                </div>
+                <div class="tip-card" onclick="toggleTip(this)">
+                    <div class="tip-header">
+                        <h4>🏦 Sisihkan untuk Tabungan</h4>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="tip-content">
+                        Biasakan menyisihkan minimal 10-20% dari pemasukan untuk tabungan darurat. Ini akan sangat membantu saat ada kebutuhan mendadak.
+                    </div>
+                </div>
+                <div class="tip-card" onclick="toggleTip(this)">
+                    <div class="tip-header">
+                        <h4>🍳 Masak Sendiri</h4>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="tip-content">
+                        Memasak sendiri bisa menghemat hingga 50% dibanding makan di luar. Coba meal prep di akhir pekan untuk menghemat waktu dan uang.
+                    </div>
+                </div>
+                <div class="tip-card" onclick="toggleTip(this)">
+                    <div class="tip-header">
+                        <h4>📱 Catat Setiap Pengeluaran</h4>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="tip-content">
+                        Pengeluaran kecil yang tidak dicatat bisa menumpuk menjadi besar. Gunakan aplikasi atau catatan sederhana untuk melacak setiap rupiah yang keluar.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2026 DompetMahasiswa | Dibuat dengan ❤️ untuk mahasiswa Indonesia</p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT (Interaktif) ===== -->
+    <script>
+        // Array untuk menyimpan data transaksi
+        var transactions = [];
+
+        // Set tanggal hari ini sebagai default
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Fungsi format angka ke Rupiah
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toLocaleString('id-ID');
+        }
+
+        // Fungsi tambah transaksi
+        function addTransaction() {
+            var desc = document.getElementById('description').value;
+            var amount = parseInt(document.getElementById('amount').value);
+            var type = document.getElementById('type').value;
+            var date = document.getElementById('date').value;
+
+            // Validasi sederhana
+            if (desc === '' || isNaN(amount) || amount <= 0 || date === '') {
+                alert('Mohon lengkapi semua data dengan benar!');
+                return;
+            }
+
+            // Simpan ke array
+            var transaction = {
+                id: Date.now(),
+                description: desc,
+                amount: amount,
+                type: type,
+                date: date
+            };
+            transactions.push(transaction);
+
+            // Reset form
+            document.getElementById('description').value = '';
+            document.getElementById('amount').value = '';
+
+            // Update tampilan
+            renderTransactions();
+            updateSummary();
+        }
+
+        // Fungsi render tabel transaksi
+        function renderTransactions() {
+            var tbody = document.getElementById('transactionBody');
+            var emptyMsg = document.getElementById('emptyMsg');
+
+            if (transactions.length === 0) {
+                tbody.innerHTML = '';
+                emptyMsg.style.display = 'block';
+                return;
+            }
+
+            emptyMsg.style.display = 'none';
+            var html = '';
+
+            for (var i = 0; i < transactions.length; i++) {
+                var t = transactions[i];
+                var badgeClass = t.type === 'income' ? 'badge-income' : 'badge-expense';
+                var badgeText = t.type === 'income' ? 'Pemasukan' : 'Pengeluaran';
+
+                html += '<tr>';
+                html += '<td>' + (i + 1) + '</td>';
+                html += '<td>' + t.date + '</td>';
+                html += '<td>' + t.description + '</td>';
+                html += '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>';
+                html += '<td>' + formatRupiah(t.amount) + '</td>';
+                html += '<td><button class="btn-delete" onclick="deleteTransaction(' + t.id + ')">Hapus</button></td>';
+                html += '</tr>';
+            }
+
+            tbody.innerHTML = html;
+        }
+
+        // Fungsi hapus transaksi
+        function deleteTransaction(id) {
+            transactions = transactions.filter(function(t) {
+                return t.id !== id;
+            });
+            renderTransactions();
+            updateSummary();
+        }
+
+        // Fungsi update ringkasan
+        function updateSummary() {
+            var totalIncome = 0;
+            var totalExpense = 0;
+
+            for (var i = 0; i < transactions.length; i++) {
+                if (transactions[i].type === 'income') {
+                    totalIncome += transactions[i].amount;
+                } else {
+                    totalExpense += transactions[i].amount;
+                }
+            }
+
+            var balance = totalIncome - totalExpense;
+
+            document.getElementById('totalIncome').textContent = formatRupiah(totalIncome);
+            document.getElementById('totalExpense').textContent = formatRupiah(totalExpense);
+            document.getElementById('balance').textContent = formatRupiah(balance);
+
+            // Ubah warna saldo jika minus
+            var balanceEl = document.getElementById('balance');
+            if (balance < 0) {
+                balanceEl.style.color = '#e53e3e';
+            } else {
+                balanceEl.style.color = '#1a365d';
+            }
+        }
+
+        // Fungsi toggle tips (accordion)
+        function toggleTip(card) {
+            card.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
